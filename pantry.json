@@ -2,99 +2,99 @@
   "ingredients": [
     {
       "name": "apples",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "oranges",
-      "number": 5
+      "quantity": 5
     },
     {
       "name": "bread",
-      "number": 6
+      "quantity": 6
     },
     {
       "name": "flour",
-      "number": 10
+      "quantity": 10
     },
     {
       "name": "bacon",
-      "number": 7
+      "quantity": 7
     },
     {
       "name": "bananas",
-      "number": 3
+      "quantity": 3
     },
     {
       "name": "apple",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "sugar",
-      "number": 16
+      "quantity": 16
     },
     {
       "name": "chicken",
-      "number": 3
+      "quantity": 3
     },
     {
       "name": "chicken breasts",
-      "number": 2
+      "quantity": 2
     },
     {
       "name": "milk",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "potatoes",
-      "number": 6
+      "quantity": 6
     },
     {
       "name": "green peppers",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "red peppers",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "onions",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "ham",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "orange juice",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "chocolate chips",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "tomatoes",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "butter",
-      "number": 26
+      "quantity": 26
     },
     {
       "name": "salt",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "pepper",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "peanut butter",
-      "number": 4
+      "quantity": 4
     },
     {
       "name": "strawberry jam",
-      "number": 4
+      "quantity": 4
     }
   ]
 }

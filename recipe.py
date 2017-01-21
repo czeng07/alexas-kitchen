@@ -10,7 +10,8 @@ def formatIngs(i):
     ings = ""
     j = data["ingredients"]
     for x in j:
-        ings += "%2C" + str(x["name"]).lower()
+        if int(x["quantity"]) > 0:
+            ings += "%2C" + str(x["name"]).lower()
     return ings[3:]
         
 def getRecipe(ings):
