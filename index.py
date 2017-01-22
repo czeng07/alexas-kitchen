@@ -366,6 +366,7 @@ def recommend_recipes(intent, session):
     should_end_session = False
 
     options.delete_many({})
+    lists.delete_many({})
     getOptions(pantry, options, lists)
 
     return build_response(session_attributes, build_speechlet_response(
