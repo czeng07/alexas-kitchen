@@ -21,7 +21,7 @@ def nameFormat(mongPantry):
             ings += "%2C" + str(doc["name"]).lower()
     return ings[3:]
 
-def getOptions(mongPantry, options):
+def getOptions(mongPantry, options, lists):
     """puts everything into the database"""
     response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=true&ingredients=" + nameFormat(mongPantry) + "&limitLicense=false&number=7&ranking=2",
     headers={
@@ -34,6 +34,7 @@ def getOptions(mongPantry, options):
         for ops in c:
             d.append(ops['name'])
         options.insert({"Title": x['title'], "id": x["id"], "ingredients": d})
+        lists.insert({"Title": x['title'], "id": x["id"], "ingredients": d})
 
 """add new item to the pantry"""
 def addNew(mongPantry, item):
@@ -55,21 +56,21 @@ def remove(mongPantry, item):
 """Searches for specific ingredients"""
 """takes two parameters, first is the options.json file, the second is the string to search for"""
 """First the program will seach the options available for that item, if it doesn't find anything, it will do a general search for that item"""
-def search(mSearch, item, options):
+def search(lists, item, options):
     """Searches for a item (String) in the i file"""
-    """count = 0
+    count = 0
     for doc in options.find():
         if item in doc['ingredients']:
             mSearch.insert({"Title": doc['Title'], "id": doc['id']})
-            count += 1"""
-    #if count <= 0: #checks to see if there are items in the options json that have the ingredient
+            count += 1
+    if count <= 0: #checks to see if there are items in the options json that have the ingredient
     response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=true&ingredients=" + item + "&limitLicense=false&number=7&ranking=2",
     headers={
         "X-Mashape-Key": "98cyiW4b9Omsh5H1Io9DyijHZESsp1wfa1BjsnSXqNq9fAyPC8",
         "Accept": "application/json"
     })
     for x in response.body:
-        mSearch.insert({"Title": x['title'], "id": x["id"]})
+        lists.insert({"Title": x['title'], "id": x["id"]})
 
 """returns the ingredients list"""
 def recipeIngredients(currentingredients, aId):
@@ -130,7 +131,7 @@ searched = db['searched']
 currentingredients = db['currentingredients']
 currentinstructions = db['currentinstructions']
 cStep = db['currentstep']
-
+lists = db['lists']
 
 
 

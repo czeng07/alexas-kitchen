@@ -15,6 +15,7 @@ current = db['currentrec']
 searched = db['searched']
 currentingredients = db['currentingredients']
 currentinstructions = db['currentinstructions']
+lists = db['lists']
 
 
 
@@ -346,8 +347,8 @@ def find_recipes(intent, session):
     reprompt_text = "Say, list recipes, to hear the available recipes."
     should_end_session = False
 
-    options.delete_many({})
-    search(options, item, options)
+    lists.delete_many({})
+    search(lists, item, options)
 
     return build_response(session_attributes, build_speechlet_response(
             title, speech_output, text_output, reprompt_text, should_end_session))
@@ -365,7 +366,7 @@ def recommend_recipes(intent, session):
     should_end_session = False
 
     options.delete_many({})
-    getOptions(pantry, options)
+    getOptions(pantry, options, lists)
 
     return build_response(session_attributes, build_speechlet_response(
             title, speech_output, text_output, reprompt_text, should_end_session))
@@ -386,7 +387,7 @@ def choose_recipe(intent, session):
         should_end_session = True
     else:
         title = "Choose Recipes"
-        recipe_array = recipeSelection(options)
+        recipe_array = recipeSelection(lists)
         speech_output = "You have chosen recipe " + str(recipe_number) + "." \
          " " + str(recipe_array[recipe_number-1]).split(":::")[0]
         text_output = "You have chosen recipe " + str(recipe_number) + "."
@@ -405,7 +406,7 @@ def list_recipes(intent, session):
     session_attributes = {}
     print("hell no")
     title = "List Recipes"
-    recipe_array = recipeSelection(options)
+    recipe_array = recipeSelection(lists)
     recipe_string = " "
     for i in xrange(len(recipe_array)):
         recipe_string = recipe_string + "Recipe number " + str(i+1) + "." \
