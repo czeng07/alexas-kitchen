@@ -1,38 +1,45 @@
 import json
 from pymongo import MongoClient
-client = None  #the client will be specified in the main code
+import unirest
 
-#check if a step number is within the bounds of the recipe
-def isValidStepNum(stepNum):
-    recipe = client['avail-currentrec']
-    return len(recipe['steps']) >= stepNum > 0
+connect = MongoClient("mongodb://caren:kz7j7qLF1as2ktOG@cluster0-shard-00-00-yeacn.mongodb.net:27017,cluster0-shard-00-01-yeacn.mongodb.net:27017,cluster0-shard-00-02-yeacn.mongodb.net:27017/admin?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin")
+db = connect["avail-ingredients"]
+pantry = db['pantry']
+options = db['recommended']
+current = db['currentrec']
+searched = db['searched']
+currentingredients = db['currentingredients']
+currentinstructions = db['currentinstructions']
+cStep = db['currentstep']
+
+
 
 #get an array of all of the strings of the steps
-def getStepsString():
-    db = client['avail-currentrec']
-    recipe = db
-    steps = []
-    for i in range(len(recipe['steps'])):
-        steps[i] = "Step " + (i + 1) + " . " + recipe['steps'][i]['step']
+def getStepsString(inst):
+    steps = {}
+    stepArray = []
+    for doc in inst.find():
+        steps[doc['Step Number']] = doc['Step']
+        
+    for x in xrange(0, inst.find().count()):
+        step = steps[x + 1]
+        stepArray.append("Step " + str(x + 1) + ". " + str(steps[x + 1]))       
+    return stepArray
 
-    return steps
+def recipeSelection(options):
+    ops = []
+    for doc in options.find():
+        ops.append(doc['Title'] + ":::" + str(doc['id']))
+    return ops
 
-#get the String for the stepNum-th step
-def getStep(stepNum):
-    recipe = client['avail-ingredients.currentrec']
-    return "Step " + stepNum + "." + recipe['steps'][stepNum - 1]['step']
 
-#set the choice-th recipe on the list to the current recipe
-def setRecipe(choice):
-    recipeList = client['avail-options']
-    idNum = recipeList[choice - 1]['id']
-    getRecipe(id, 'avail-ingredients.currentrec')
-    return
 
-def isValidRecipeNum(choice):
-    return 0 < choice <= 10
 
-#get the String for the choice-th recipe from the options list
-def getRecipe(choice):
-    recipeList = client['avail-options']
-    return "Recipe " + (choice) + "." + recipeList[choice-1]['name']
+
+
+
+
+
+#print getStepsString(currentinstructions)
+
+#print recipeSelection(options)

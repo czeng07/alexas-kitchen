@@ -99,8 +99,6 @@ def recipeInstructions(currentinstructions, aId):
             currentinstructions.insert({"Step Number": number, "Step": x['step']})
             number += 1
 
-    currentinstructions.insert({"current step": 1})
-
     
 
 
@@ -124,6 +122,7 @@ current = db['currentrec']
 searched = db['searched']
 currentingredients = db['currentingredients']
 currentinstructions = db['currentinstructions']
+cStep = db['currentstep']
 
 
 #addToMongo(pantry)
@@ -133,6 +132,8 @@ currentinstructions = db['currentinstructions']
 #search(searched, "chicken", options)
 
 #recipe(currentingredients, currentinstructions, 602708)
+
+#cStep.insert({"Step": 1})
 
 
 
