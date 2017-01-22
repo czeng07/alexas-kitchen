@@ -2,12 +2,7 @@ import json
 import unirest
 import sys
 from pymongo import MongoClient
-from pprint import pprint
-import bson
-from bson import json_util
-import re
-import ast
-from bson.json_util import dumps
+
 
 
 """take json, and add to pantry"""
@@ -75,6 +70,50 @@ def search(mSearch, item, options):
         for x in response.body:
             mSearch.insert({"Title": x['title'], "id": x["id"]})
         
+"""returns the ingredients list"""
+def recipeIngredients(currentingredients, aId):
+    response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + str(aId) + "/information?includeNutrition=false",
+      headers={
+        "X-Mashape-Key": "98cyiW4b9Omsh5H1Io9DyijHZESsp1wfa1BjsnSXqNq9fAyPC8",
+        "Accept": "application/json"
+      }
+    )
+    data = response.body["extendedIngredients"]
+    for x in data:
+        currentingredients.insert({"name": x['name'], "amount": str(x['amount']) + " " + x['unit'], "Image": x['image']})
+        
+
+"""instruction list"""
+def recipeInstructions(currentinstructions, aId):
+    response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + str(aId) + "/analyzedInstructions?stepBreakdown=true",
+      headers={
+        "X-Mashape-Key": "98cyiW4b9Omsh5H1Io9DyijHZESsp1wfa1BjsnSXqNq9fAyPC8",
+        "Accept": "application/json"
+      }
+    )
+    data = response.body
+    number = 1
+    for a in data:
+        b = a['steps']
+        for x in b:
+            currentinstructions.insert({"Step Number": number, "Step": x['step']})
+            number += 1
+
+    currentinstructions.insert({"current step": 1})
+
+    
+
+
+"""wrapper method"""
+def recipe(currentingredients, currentinstructions, aId):
+    recipeIngredients(currentingredients, aId)
+    recipeInstructions(currentinstructions, aId)
+                                 
+                                  
+
+    
+    
+
 
 
 connect = MongoClient("mongodb://caren:kz7j7qLF1as2ktOG@cluster0-shard-00-00-yeacn.mongodb.net:27017,cluster0-shard-00-01-yeacn.mongodb.net:27017,cluster0-shard-00-02-yeacn.mongodb.net:27017/admin?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin")
@@ -83,11 +122,17 @@ pantry = db['pantry']
 options = db['recommended']
 current = db['currentrec']
 searched = db['searched']
+currentingredients = db['currentingredients']
+currentinstructions = db['currentinstructions']
 
 
-addNew(pantry, "mushrooms")
-remove(pantry, "mushrooms")
+#addToMongo(pantry)
 
+#getOptions(pantry, options)
+
+#search(searched, "chicken", options)
+
+#recipe(currentingredients, currentinstructions, 602708)
 
 
 
