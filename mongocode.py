@@ -125,13 +125,13 @@ currentinstructions = db['currentinstructions']
 cStep = db['currentstep']
 
 
-#addToMongo(pantry)
+addToMongo(pantry)
 
-#getOptions(pantry, options)
+getOptions(pantry, options)
 
-#search(searched, "chicken", options)
+search(searched, "chicken", options)
 
-#recipe(currentingredients, currentinstructions, 602708)
+recipe(currentingredients, currentinstructions, 602708)
 
 #cStep.insert({"Step": 1})
 
