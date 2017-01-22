@@ -63,8 +63,8 @@ def search(lists, item, options):
         if item in doc['ingredients']:
             lists.insert({"Title": doc['Title'], "id": doc['id']})
             count += 1
-    if count <= 0: #checks to see if there are items in the options json that have the ingredient
-        response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=true&ingredients=" + item + "&limitLicense=false&number=7&ranking=2",
+    if count <= 7: #checks to see if there are items in the options json that have the ingredient
+        response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=true&ingredients=" + item + "&limitLicense=false&number=" + str(6 - count) + "&ranking=2",
         headers={
             "X-Mashape-Key": "98cyiW4b9Omsh5H1Io9DyijHZESsp1wfa1BjsnSXqNq9fAyPC8",
             "Accept": "application/json"
