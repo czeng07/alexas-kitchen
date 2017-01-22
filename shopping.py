@@ -23,4 +23,4 @@ def shoppingCart(cart, pantry):
     return items
 
 
-print shoppingCart(cart, pantry)
+#print shoppingCart(cart, pantry)

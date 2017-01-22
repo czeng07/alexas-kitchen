@@ -20,10 +20,11 @@ def getStepsString(inst):
     stepArray = []
     for doc in inst.find():
         steps[doc['Step Number']] = doc['Step']
-        
-    for x in xrange(0, inst.find().count()):
-        step = steps[x + 1]
-        stepArray.append("Step " + str(x + 1) + ". " + str(steps[x + 1]))       
+    length = 0
+    for a in steps:
+        length += 1
+    for x in xrange(1, length):
+        stepArray.append(steps[x + 1])       
     return stepArray
 
 def recipeSelection(options):

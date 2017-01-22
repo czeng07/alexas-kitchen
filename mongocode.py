@@ -132,9 +132,11 @@ cStep = db['currentstep']
 #search(searched, "chicken", options)
 
 #recipe(currentingredients, currentinstructions, 602708)
+#this will place the recipe in the data base. Use getStepsString to actually read it
+
 
 #cStep.insert({"Step": 1})
-
+#this is used to track step
 
 
 
