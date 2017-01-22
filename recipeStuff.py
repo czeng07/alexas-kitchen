@@ -23,8 +23,8 @@ def getStepsString(inst):
     length = 0
     for a in steps:
         length += 1
-    for x in xrange(1, length):
-        stepArray.append(steps[x + 1])       
+    for x in xrange(1, length+1):
+        stepArray.append(steps[x])
     return stepArray
 
 def recipeSelection(options):
