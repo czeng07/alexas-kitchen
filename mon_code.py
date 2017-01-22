@@ -61,7 +61,7 @@ def search(lists, item, options):
     count = 0
     for doc in options.find():
         if item in doc['ingredients']:
-            mSearch.insert({"Title": doc['Title'], "id": doc['id']})
+            lists.insert({"Title": doc['Title'], "id": doc['id']})
             count += 1
     if count <= 0: #checks to see if there are items in the options json that have the ingredient
         response = unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=true&ingredients=" + item + "&limitLicense=false&number=7&ranking=2",
