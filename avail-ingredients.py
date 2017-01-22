@@ -12,6 +12,11 @@ pantry = db['pantry']
 recommended = db['recommended']
 currentrec= db['currentrec']
 searched = db['searched']
+currentingredients = db['currentingredients']
+currentingredients.delete_many({})
+currentinstructions = db['currentinstructions']
+currentinstructions.delete_many({})
+currentstep = db['currentstep']
 
 
 with open('pantry.json') as data_file:
@@ -34,6 +39,12 @@ with open('searched.json') as data_file:
     data = json.load(data_file)
     searched.delete_many({})
 
+
+
+# with open('pantry.json') as data_file:
+#     currentingredients.delete_many({})
+# with open('pantry.json') as data_file:
+#     currentinstructions.delete_many({})
 #for doc in pantry.find():
 #    print doc["name"]
 

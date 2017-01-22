@@ -126,13 +126,13 @@ currentingredients = db['currentingredients']
 currentinstructions = db['currentinstructions']
 
 
-#addToMongo(pantry)
+addToMongo(pantry)
 
-#getOptions(pantry, options)
+getOptions(pantry, options)
 
-#search(searched, "chicken", options)
+search(searched, "chicken", options)
 
-#recipe(currentingredients, currentinstructions, 602708)
+recipe(currentingredients, currentinstructions, 602708)
 
 
 
