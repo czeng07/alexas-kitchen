@@ -18,11 +18,6 @@ currentinstructions = db['currentinstructions']
 lists = db['lists']
 
 
-
-
-
-
-
 #import requests
 
 # --------------- Helpers that build all of the responses ----------------------
@@ -213,6 +208,7 @@ def get_search_help_selection(intent, session):
         title, speech_output, text_output, reprompt_text, should_end_session))
 
 
+# Removes a pantry item, if it exists
 def remove_pantry_item(intent, session):
     item = str(intent['slots']['remove_pantry_item']['value'])
     title = "Remove Item from Pantry"
@@ -233,6 +229,8 @@ def remove_pantry_item(intent, session):
     return build_response(session_attributes, build_speechlet_response(
         title, speech_output, text_output, reprompt_text, should_end_session))
 
+
+#Adds an item to the pantry
 def add_pantry_item(intent, session):
     item = str(intent['slots']['add_pantry_item']['value'])
     session_attributes = {"add_item":item}
@@ -248,13 +246,14 @@ def add_pantry_item(intent, session):
             title, speech_output, text_output, reprompt_text, should_end_session))
 
 
+# Handle Yes/No user input for adding item
 def accept_add(intent, session):
     acceptance = str(intent['slots']['yes_or_no']['value'])
     if "add_item" in session["attributes"]:
         item = str(session['attributes']['add_item'])
         session_attributes = {}
         if acceptance == "yes":
-            ####
+
             title = "Added"
             speech_output = "Item was added succesfully."
             text_output = "Item was added succesfully."
@@ -265,19 +264,15 @@ def accept_add(intent, session):
             # Adds item to the MongoDB database
             addNew(pantry,item)
 
-
-            ###
         else:
-            ####
+
             title = "Not Added"
             speech_output = "Item was not added."
             text_output = "Item was not added."
             reprompt_text = "If you would like to add or remove items from the " \
                             "the pantry, use the commands add and remove."
             should_end_session = False
-            #Don't add
 
-            ####
         return build_response(session_attributes, build_speechlet_response(
                 title, speech_output, text_output, reprompt_text, should_end_session))
     else:
@@ -319,6 +314,7 @@ def get_recipe_help_selection(intent, session):
         "Recipe Help", speech_output, text_output, reprompt_text, should_end_session))
 
 
+#List all items in the pantry
 def list_pantry_items(intent, session):
     session_attributes = {}
     title = "Pantry Items"
@@ -336,6 +332,7 @@ def list_pantry_items(intent, session):
         title, speech_output, text_output, reprompt_text, should_end_session))
 
 
+# Find recipes with an ingredient
 def find_recipes(intent, session):
 
     item = str(intent['slots']['find_recipe_item']['value'])
@@ -354,6 +351,7 @@ def find_recipes(intent, session):
             title, speech_output, text_output, reprompt_text, should_end_session))
 
 
+# Find recipes by pantry items
 def recommend_recipes(intent, session):
 
 
@@ -374,7 +372,7 @@ def recommend_recipes(intent, session):
 
 
 
-
+# Allows a user to choose a recipe by number
 def choose_recipe(intent, session):
 
     recipe_number = int(intent['slots']['recipe_choice']['value'])
@@ -402,6 +400,8 @@ def choose_recipe(intent, session):
     return build_response(session_attributes, build_speechlet_response(
             title, speech_output, text_output, reprompt_text, should_end_session))
 
+
+# Lists the recipes available as a result of user search
 def list_recipes(intent, session):
 
     session_attributes = {}
@@ -412,7 +412,7 @@ def list_recipes(intent, session):
     for i in xrange(len(recipe_array)):
         recipe_string = recipe_string + "Recipe number " + str(i+1) + "." \
         " " + recipe_array[i].split(":::")[0] + ".\n"
-    speech_output = "Here are seven recipes you might like. " + recipe_string + " " \
+    speech_output = "Here are several recipes you might like. " + recipe_string + " " \
         " You can choose a recipe by saying the phrase, 'choose recipe', followed " \
         " by the number of the recipe."
     text_output = "Recipes:\n"+recipe_string
@@ -425,6 +425,7 @@ def list_recipes(intent, session):
             title, speech_output, text_output, reprompt_text, should_end_session))
 
 
+# List all ingredients (with amounts) used in the recipe
 def list_ingredients(intent, session):
     session_attributes = {}
     title = "List Ingredients"
@@ -440,7 +441,7 @@ def list_ingredients(intent, session):
             title, speech_output, text_output, reprompt_text, should_end_session))
 
 
-
+# Read a step in the recipe
 def read_step(intent,session,index):
 
     steps = getStepsString(currentinstructions)
@@ -463,7 +464,7 @@ def read_step(intent,session,index):
             title, speech_output, text_output, reprompt_text, should_end_session))
 
 
-
+# Read items that may need to be bought
 def read_shopping_items(intent, session):
     shopping_items = shoppingCart(1, pantry)
     shopping_string = ""
