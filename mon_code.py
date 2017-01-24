@@ -7,6 +7,7 @@ from pymongo import MongoClient
 
 """take json, and add to pantry"""
 def addToMongo(mongPantry):
+    mongPantry.remove({})
     with open('pantry2.json') as data_file:
         data = json.load(data_file)
     a = data['ingredients']
@@ -135,7 +136,7 @@ lists = db['lists']
 
 
 
-#addToMongo(pantry)
+addToMongo(pantry)
 
 #getOptions(pantry, options)
 
