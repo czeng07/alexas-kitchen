@@ -210,7 +210,7 @@ def get_search_help_selection(intent, session):
 
 # Removes a pantry item, if it exists
 def remove_pantry_item(intent, session):
-    item = str(intent['slots']['remove_pantry_item']['value'])
+    item = str(intent['slots']['remove_pantry_item']['value']).lower()
     title = "Remove Item from Pantry"
     session_attributes = {}
 
@@ -232,7 +232,7 @@ def remove_pantry_item(intent, session):
 
 #Adds an item to the pantry
 def add_pantry_item(intent, session):
-    item = str(intent['slots']['add_pantry_item']['value'])
+    item = str(intent['slots']['add_pantry_item']['value']).lower()
     session_attributes = {"add_item":item}
     title = "Add Item to Pantry"
     speech_output = "Are you sure you would like to add " + item + " to "\

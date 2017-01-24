@@ -39,6 +39,9 @@ def getOptions(mongPantry, options, lists):
 
 """add new item to the pantry"""
 def addNew(mongPantry, item):
+    for doc in mongPantry.find():
+        if doc['name'] == item:
+            mongPantry.remove({"name": item})
     mongPantry.insert({"name": item, "quantity": 5})
 
 
